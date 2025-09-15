@@ -4,6 +4,7 @@ from django_filters.rest_framework import DjangoFilterBackend
 from .models import Budget
 from .serializers import BudgetSerializer
 from transactions.pagination import StandardResultsSetPagination
+from transactions.permissions import IsOwner
 
 logger = logging.getLogger(__name__)
 
@@ -34,3 +35,15 @@ class BudgetListCreateView(generics.ListCreateAPIView):
     def perform_create(self, serializer):
         budget = serializer.save(user=self.request.user)
         logger.info(f"Budget created for user {self.request.user.id}: {budget.id}")
+
+class BudgetDetailView(generics.RetrieveUpdateDestroyAPIView):
+    """
+    Retrieve, update, or delete a single budget.
+    Access is restricted to the owner.
+    """
+    serializer_class = BudgetSerializer
+    permission_classes = [permissions.IsAuthenticated, IsOwner]
+
+    def get_queryset(self):
+        """Return budgets belonging to the logged-in user."""
+        return Budget.objects.filter(user=self.request.user)
