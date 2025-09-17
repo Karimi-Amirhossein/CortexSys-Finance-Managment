@@ -14,6 +14,7 @@ urlpatterns = [
     path('api/transactions/', include('transactions.urls', namespace='transactions')),
     path('api/budgets/', include('budgets.urls', namespace='budgets')),
     path('api/accounts/', include('accounts.urls', namespace='accounts')),
+    path('api/reports/', include('reports.urls', namespace='reports')),
 
     # API Authentication Endpoints
     path("api/token/", TokenObtainPairView.as_view(), name="token_obtain_pair"),
