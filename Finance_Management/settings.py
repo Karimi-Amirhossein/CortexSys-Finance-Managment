@@ -139,3 +139,20 @@ REST_FRAMEWORK = {
         "rest_framework_simplejwt.authentication.JWTAuthentication",
     )
 }
+
+# Celery Configuration
+
+# Use Redis as the message broker (task queue manager).
+CELERY_BROKER_URL = "redis://127.0.0.1:6379/0"
+
+# Use Redis to store task results as well.
+CELERY_RESULT_BACKEND = "redis://127.0.0.1:6379/0"
+
+# Accept only JSON content for security and consistency.
+CELERY_ACCEPT_CONTENT = ["json"]
+
+# Serialize all tasks in JSON format.
+CELERY_TASK_SERIALIZER = "json"
+
+# Serialize all results in JSON format.
+CELERY_RESULT_SERIALIZER = "json"

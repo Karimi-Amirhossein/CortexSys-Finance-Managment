@@ -1,5 +1,5 @@
 """
-Main URL configuration for the finance_management project.
+Main URL configuration for the Finance_Management project.
 Includes admin routes and API endpoints for all apps.
 """
 from django.contrib import admin
