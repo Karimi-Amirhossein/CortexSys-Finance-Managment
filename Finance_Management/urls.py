@@ -4,7 +4,9 @@ Includes admin routes and API endpoints for all apps.
 """
 from django.contrib import admin
 from django.urls import path, include
-from rest_framework_simplejwt.views import ( TokenObtainPairView, TokenRefreshView)
+from rest_framework_simplejwt.views import (TokenObtainPairView, TokenRefreshView)
+from drf_spectacular.views import (SpectacularAPIView, SpectacularRedocView, SpectacularSwaggerView)
+
 
 urlpatterns = [
     # Admin panel
@@ -19,4 +21,24 @@ urlpatterns = [
     # API Authentication Endpoints
     path("api/token/", TokenObtainPairView.as_view(), name="token_obtain_pair"),
     path("api/token/refresh/", TokenRefreshView.as_view(), name="token_refresh"),
+
+    # API Documentation Endpoints
+
+    # Raw OpenAPI schema (JSON)
+    path(
+        "api/schema/",
+        SpectacularAPIView.as_view(),
+        name="api-schema"),
+
+    # Interactive Swagger UI
+    path(
+        "api/docs/",
+        SpectacularSwaggerView.as_view(url_name="api-schema"),
+        name="swagger-ui"),
+
+    # Alternative Redoc UI
+    path(
+        "api/redoc/",
+        SpectacularRedocView.as_view(url_name="api-schema"),
+        name="redoc-ui"),
 ]

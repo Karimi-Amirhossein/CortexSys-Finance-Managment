@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'transactions',
     'budgets',
     'reports',
+    'drf_spectacular',
 ]
 
 MIDDLEWARE = [
@@ -138,7 +139,8 @@ AUTH_USER_MODEL = 'accounts.CustomUser'
 REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": (
         "rest_framework_simplejwt.authentication.JWTAuthentication",
-    )
+    ),
+    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
 }
 
 # Celery Configuration
@@ -165,4 +167,18 @@ CELERY_BEAT_SCHEDULE = {
         # Executes every day at midnight.
         'schedule': crontab(hour=0, minute=0),
     },
+}
+
+# drf-spectacular settings for API documentation
+SPECTACULAR_SETTINGS = {
+    # Basic info displayed in the Swagger / OpenAPI docs
+    'TITLE': 'Finance Management API',
+    'DESCRIPTION': (
+        'A lightweight API for managing personal and small business finances. '
+        'Includes features for transactions, budgets, and financial reports.'
+    ),
+    'VERSION': '1.0.0',
+
+    # Do not include the raw schema in the served docs
+    'SERVE_INCLUDE_SCHEMA': False,
 }
