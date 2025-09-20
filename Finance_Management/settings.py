@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 from pathlib import Path
 import environ
 import os
+from celery.schedules import crontab
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -156,3 +157,12 @@ CELERY_TASK_SERIALIZER = "json"
 
 # Serialize all results in JSON format.
 CELERY_RESULT_SERIALIZER = "json"
+
+# Celery Beat Settings
+CELERY_BEAT_SCHEDULE = {
+    'check-budgets-daily-at-midnight': {
+        'task': 'budgets.tasks.check_budgets',
+        # Executes every day at midnight.
+        'schedule': crontab(hour=0, minute=0),
+    },
+}
