@@ -146,10 +146,10 @@ REST_FRAMEWORK = {
 # Celery Configuration
 
 # Use Redis as the message broker (task queue manager).
-CELERY_BROKER_URL = "redis://127.0.0.1:6379/0"
+CELERY_BROKER_URL = env("REDIS_URL")
 
 # Use Redis to store task results as well.
-CELERY_RESULT_BACKEND = "redis://127.0.0.1:6379/0"
+CELERY_RESULT_BACKEND = env("REDIS_URL")
 
 # Accept only JSON content for security and consistency.
 CELERY_ACCEPT_CONTENT = ["json"]
