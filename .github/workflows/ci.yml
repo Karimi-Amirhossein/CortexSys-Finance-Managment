@@ -45,10 +45,12 @@ jobs:
             SECRET_KEY: ${{ secrets.SECRET_KEY }}
             # This line constructs the single DATABASE_URL that our settings.py needs
             DATABASE_URL: psql://${{ secrets.POSTGRES_USER }}:${{ secrets.POSTGRES_PASSWORD }}@localhost:5432/${{ secrets.POSTGRES_DB }}
+            REDIS_URL: redis://localhost:6379/0
         run: python manage.py migrate --noinput
 
       - name: Run tests
         env:
             SECRET_KEY: ${{ secrets.SECRET_KEY }}
             DATABASE_URL: psql://${{ secrets.POSTGRES_USER }}:${{ secrets.POSTGRES_PASSWORD }}@localhost:5432/${{ secrets.POSTGRES_DB }}
+            REDIS_URL: redis://localhost:6379/0
         run: pytest
