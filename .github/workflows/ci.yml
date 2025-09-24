@@ -42,20 +42,13 @@ jobs:
 
       - name: Run migrations
         env:
-          SECRET_KEY: ${{ secrets.SECRET_KEY }}
-          POSTGRES_DB: ${{ secrets.POSTGRES_DB }}
-          POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
-          POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
-          POSTGRES_HOST: postgres
-          POSTGRES_PORT: 5432
+            SECRET_KEY: ${{ secrets.SECRET_KEY }}
+            # This line constructs the single DATABASE_URL that our settings.py needs
+            DATABASE_URL: psql://${{ secrets.POSTGRES_USER }}:${{ secrets.POSTGRES_PASSWORD }}@localhost:5432/${{ secrets.POSTGRES_DB }}
         run: python manage.py migrate --noinput
 
       - name: Run tests
         env:
-          SECRET_KEY: ${{ secrets.SECRET_KEY }}
-          POSTGRES_DB: ${{ secrets.POSTGRES_DB }}
-          POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
-          POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
-          POSTGRES_HOST: postgres
-          POSTGRES_PORT: 5432
+            SECRET_KEY: ${{ secrets.SECRET_KEY }}
+            DATABASE_URL: psql://${{ secrets.POSTGRES_USER }}:${{ secrets.POSTGRES_PASSWORD }}@localhost:5432/${{ secrets.POSTGRES_DB }}
         run: pytest
